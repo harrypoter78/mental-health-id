@@ -1,0 +1,30 @@
+@echo off
+cd /d d:\Documents\Laravel\mental-health-id
+
+REM Delete unnecessary documentation files
+del /Q CHANGELOG_SIDEBAR.md 2>nul
+del /Q COMPLETION_CHECKLIST.md 2>nul
+del /Q COMPLETION_REPORT.md 2>nul
+del /Q FILE_CHANGES_DETAILED.md 2>nul
+del /Q FILE_REFERENCE_GUIDE.md 2>nul
+del /Q FILE_VERIFICATION_CHECKLIST.md 2>nul
+del /Q IMPLEMENTATION_REPORT.md 2>nul
+del /Q QUICK_REFERENCE.md 2>nul
+del /Q README_ROLE_FEATURES.md 2>nul
+del /Q README_SIDEBAR.md 2>nul
+del /Q REVISIONS_COMPLETE_REPORT.md 2>nul
+del /Q REVISIONS_SUMMARY.md 2>nul
+del /Q REVISION_REPORT.md 2>nul
+del /Q ROLE_FEATURE_SUMMARY.md 2>nul
+del /Q ROLE_IMPLEMENTATION_GUIDE.md 2>nul
+del /Q ROLE_SETUP_GUIDE.md 2>nul
+del /Q ROLE_TESTING_GUIDE.md 2>nul
+del /Q SIDEBAR_QUICKSTART.md 2>nul
+del /Q TESTING_GUIDE.md 2>nul
+del /Q run_role_migration.bat 2>nul
+del /Q database_verification.sql 2>nul
+
+REM Remove from git tracking
+git rm --cached --force CHANGELOG_SIDEBAR.md COMPLETION_CHECKLIST.md COMPLETION_REPORT.md FILE_CHANGES_DETAILED.md FILE_REFERENCE_GUIDE.md FILE_VERIFICATION_CHECKLIST.md IMPLEMENTATION_REPORT.md QUICK_REFERENCE.md README_ROLE_FEATURES.md README_SIDEBAR.md REVISIONS_COMPLETE_REPORT.md REVISIONS_SUMMARY.md REVISION_REPORT.md ROLE_FEATURE_SUMMARY.md ROLE_IMPLEMENTATION_GUIDE.md ROLE_SETUP_GUIDE.md ROLE_TESTING_GUIDE.md SIDEBAR_QUICKSTART.md TESTING_GUIDE.md run_role_migration.bat database_verification.sql 2>nul
+
+echo Cleanup completed!

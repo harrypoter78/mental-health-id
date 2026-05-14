@@ -22,7 +22,7 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
-*.md
-!README.md
-*.bat
-*.sql
+# *.md
+# !README.md
+# *.bat
+# *.sql
