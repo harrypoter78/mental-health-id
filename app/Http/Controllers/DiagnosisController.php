@@ -34,11 +34,14 @@ class DiagnosisController extends Controller
     {
         $request->validate([
             'gejala' => 'required|array|min:1',
-            'nama_pasien' => 'required|string|max:100',
         ]);
 
+        // Pastikan user sudah login untuk menyimpan riwayat
+        if (!auth()->check()) {
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk menyimpan riwayat diagnosis');
+        }
+
         $gejalaTerpilih = $request->input('gejala');
-        $namaPasien = $request->input('nama_pasien');
 
         // Ambil semua penyakit
         $semuaPenyakit = Penyakit::all();
@@ -84,17 +87,17 @@ class DiagnosisController extends Controller
         // Ambil diagnosis tertinggi
         $diagnosisTertinggi = !empty($hasilDiagnosis) ? $hasilDiagnosis[0] : null;
 
-        // Simpan riwayat
+        // Simpan riwayat dengan user_id
         if ($diagnosisTertinggi) {
             Riwayat::create([
-                'nama_pasien' => $namaPasien,
+                'user_id' => auth()->id(),
                 'nama_penyakit' => $diagnosisTertinggi['penyakit']->nama_penyakit,
                 'tanggal' => now()->toDateString(),
             ]);
         }
 
         return view('diagnosis_hasil', [
-            'namaPasien' => $namaPasien,
+            'namaPasien' => auth()->user()->name,
             'diagnosisTertinggi' => $diagnosisTertinggi,
             'hasilDiagnosis' => $hasilDiagnosis,
         ]);
@@ -105,7 +108,14 @@ class DiagnosisController extends Controller
      */
     public function riwayat()
     {
-        $riwayat = Riwayat::orderBy('tanggal', 'desc')->paginate(10);
+        // Jika user sudah login, tampilkan hanya riwayat miliknya
+        if (auth()->check()) {
+            $riwayat = Riwayat::where('user_id', auth()->id())->orderBy('tanggal', 'desc')->paginate(10);
+        } else {
+            // Jika tidak login, tampilkan semua riwayat (backward compatibility)
+            $riwayat = Riwayat::orderBy('tanggal', 'desc')->paginate(10);
+        }
+
         return view('diagnosis_riwayat', compact('riwayat'));
     }
 }

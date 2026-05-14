@@ -11,7 +11,14 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        $middleware->alias([
+            'admin' => function ($request, $next) {
+                if (auth()->check() && auth()->user()->role === 'admin') {
+                    return $next($request);
+                }
+                abort(403, 'Anda tidak memiliki akses ke dashboard admin');
+            },
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

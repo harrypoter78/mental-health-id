@@ -98,13 +98,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Diagnosis</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/diagnosis/riwayat">Riwayat</a>
-                    </li>
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/dashboard">Admin</a>
+                            <a class="nav-link" href="/diagnosis/riwayat">Riwayat</a>
                         </li>
+                    @endauth
+                    @auth
+                        @if (auth()->user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/dashboard">Admin</a>
+                            </li>
+                        @endif
                         <li class="nav-item">
                             <form action="/logout" method="POST" class="d-inline">
                                 @csrf
@@ -113,7 +117,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">Login Admin</a>
+                            <a class="nav-link" href="/login">Login</a>
                         </li>
                     @endauth
                 </ul>

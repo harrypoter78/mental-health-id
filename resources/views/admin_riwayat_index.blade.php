@@ -27,7 +27,7 @@
                         @foreach ($riwayat as $item)
                             <tr>
                                 <td>{{ ($riwayat->currentPage() - 1) * $riwayat->perPage() + $loop->iteration }}</td>
-                                <td>{{ $item->nama_pasien }}</td>
+                                <td>{{ $item->user ? $item->user->name : 'Unknown User' }}</td>
                                 <td><span class="badge bg-info">{{ $item->nama_penyakit }}</span></td>
                                 <td>{{ \Carbon\Carbon::parse($item->tanggal)->format('d M Y') }}</td>
                                 <td>

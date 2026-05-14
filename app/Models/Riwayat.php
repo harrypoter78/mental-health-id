@@ -10,10 +10,18 @@ class Riwayat extends Model
     protected $primaryKey = 'id_riwayat';
 
     protected $fillable = [
-        'nama_pasien', 'nama_penyakit', 'tanggal'
+        'user_id', 'nama_penyakit', 'tanggal'
     ];
 
     public $timestamps = false;
+
+    /**
+     * Relationship: Riwayat belongs to User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 
     /**
      * Ambil semua riwayat, atau satu riwayat berdasarkan id.

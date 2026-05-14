@@ -11,8 +11,8 @@ Route::get('/diagnosis/kuis', [DiagnosisController::class, 'kuis'])->name('diagn
 Route::post('/diagnosis/proses', [DiagnosisController::class, 'prosesDiagnosis'])->name('diagnosis.proses');
 Route::get('/diagnosis/riwayat', [DiagnosisController::class, 'riwayat'])->name('diagnosis.riwayat');
 
-// Admin Routes - Protected by auth
-Route::middleware('auth')->prefix('admin')->group(function () {
+// Admin Routes - Protected by auth and admin role
+Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     
     // Gejala Routes
@@ -57,7 +57,12 @@ Route::middleware('guest')->group(function () {
         ]);
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/admin/dashboard');
+            // Check role dan redirect accordingly
+            if (auth()->user()->role === 'admin') {
+                return redirect()->intended('/admin/dashboard');
+            } else {
+                return redirect()->intended('/');
+            }
         }
 
         return back()->withErrors([
@@ -68,6 +73,12 @@ Route::middleware('guest')->group(function () {
 
 Route::post('/logout', function () {
     Auth::logout();
-    return redirect('/');
+    
+    // Clear session dan add cache control headers untuk prevent back button access
+    return redirect('/')->withHeaders([
+        'Cache-Control' => 'no-cache, no-store, must-revalidate, private',
+        'Pragma' => 'no-cache',
+        'Expires' => '0',
+    ]);
 })->name('logout')->middleware('auth');
 

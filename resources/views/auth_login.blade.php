@@ -1,6 +1,6 @@
 @extends('app')
 
-@section('title', 'Admin Login')
+@section('title', 'Login')
 
 @section('content') 
 {{-- Tambahkan w-100 dan m-0 pada row agar tidak menyusut saat di dalam flex container --}}
@@ -8,7 +8,7 @@
     <div class="col-md-6 col-lg-5">
         <div class="card shadow-lg">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0 text-center"><i class="bi bi-shield-lock"></i> Admin Login</h4>
+                <h4 class="mb-0 text-center"><i class="bi bi-box-arrow-in-right"></i> Login</h4>
             </div>
             <div class="card-body p-5">
                 <form method="POST" action="/login">
