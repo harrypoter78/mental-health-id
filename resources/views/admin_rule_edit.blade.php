@@ -1,8 +1,12 @@
-@extends('app')
+@extends('admin_layout')
 
 @section('title', 'Edit Rule')
 
 @section('content')
+<div class="page-header">
+    <h3><i class="bi bi-pencil"></i> Edit Rule</h3>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card">

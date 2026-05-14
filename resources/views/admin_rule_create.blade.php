@@ -1,8 +1,12 @@
-@extends('app')
+@extends('admin_layout')
 
 @section('title', 'Tambah Rule')
 
 @section('content')
+<div class="page-header">
+    <h3><i class="bi bi-plus-circle"></i> Tambah Rule</h3>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card">

@@ -1,12 +1,10 @@
-@extends('app')
+@extends('admin_layout')
 
 @section('title', 'Riwayat Diagnosis')
 
 @section('content')
-<div class="row mb-3">
-    <div class="col-lg-12">
-        <h3><i class="bi bi-clipboard-check"></i> Riwayat Diagnosis Pasien</h3>
-    </div>
+<div class="page-header">
+    <h3><i class="bi bi-clipboard-check"></i> Riwayat Diagnosis Pasien</h3>
 </div>
 
 <div class="card">

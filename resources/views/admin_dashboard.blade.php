@@ -1,12 +1,10 @@
-@extends('app')
+@extends('admin_layout')
 
 @section('title', 'Admin Dashboard')
 
 @section('content')
-<div class="row mb-4">
-    <div class="col-lg-12">
-        <h2 class="mb-4"><i class="bi bi-speedometer2"></i> Dashboard Admin</h2>
-    </div>
+<div class="page-header">
+    <h3><i class="bi bi-speedometer2"></i> Dashboard Admin</h3>
 </div>
 
 <div class="row g-4 mb-5">

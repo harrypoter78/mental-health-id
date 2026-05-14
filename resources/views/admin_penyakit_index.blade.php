@@ -1,17 +1,13 @@
-@extends('app')
+@extends('admin_layout')
 
 @section('title', 'Kelola Penyakit')
 
 @section('content')
-<div class="row mb-3">
-    <div class="col-lg-10">
-        <h3><i class="bi bi-virus2"></i> Kelola Penyakit</h3>
-    </div>
-    <div class="col-lg-2">
-        <a href="{{ route('admin.penyakit.create') }}" class="btn btn-primary w-100">
-            <i class="bi bi-plus-circle"></i> Tambah
-        </a>
-    </div>
+<div class="page-header">
+    <h3><i class="bi bi-virus2"></i> Kelola Penyakit</h3>
+    <a href="{{ route('admin.penyakit.create') }}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Tambah
+    </a>
 </div>
 
 <div class="card">

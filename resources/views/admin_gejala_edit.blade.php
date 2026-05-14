@@ -1,8 +1,12 @@
-@extends('app')
+@extends('admin_layout')
 
 @section('title', 'Edit Gejala')
 
 @section('content')
+<div class="page-header">
+    <h3><i class="bi bi-pencil"></i> Edit Gejala</h3>
+</div>
+
 <div class="row justify-content-center">
     <div class="col-lg-6">
         <div class="card">
@@ -10,7 +14,6 @@
                 <h5 class="mb-0"><i class="bi bi-pencil"></i> Edit Gejala</h5>
             </div>
             <div class="card-body">
-                <form action="{{ route('admin.gejala.update', $gejala->id_gejala) }}" method="POST">
                     @csrf
                     @method('PUT')
 
