@@ -188,7 +188,7 @@ class AdminController extends Controller
 
     public function indexRiwayat()
     {
-        $riwayat = Riwayat::orderBy('tanggal', 'desc')->paginate(15);
+        $riwayat = Riwayat::with('user')->orderBy('tanggal', 'desc')->paginate(15);
         return view('admin_riwayat_index', compact('riwayat'));
     }
 

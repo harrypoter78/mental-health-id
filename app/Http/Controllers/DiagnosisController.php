@@ -32,14 +32,17 @@ class DiagnosisController extends Controller
      */
     public function prosesDiagnosis(Request $request)
     {
+        // Jika mengakses via GET, redirect ke halaman kuis
+        if ($request->isMethod('get')) {
+            return redirect()->route('diagnosis.kuis')->with('info', 'Silakan pilih gejala terlebih dahulu');
+        }
+
         $request->validate([
             'gejala' => 'required|array|min:1',
+        ], [
+            'gejala.required' => 'Silakan pilih minimal satu gejala',
+            'gejala.min' => 'Silakan pilih minimal satu gejala',
         ]);
-
-        // Pastikan user sudah login untuk menyimpan riwayat
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk menyimpan riwayat diagnosis');
-        }
 
         $gejalaTerpilih = $request->input('gejala');
 
@@ -87,8 +90,8 @@ class DiagnosisController extends Controller
         // Ambil diagnosis tertinggi
         $diagnosisTertinggi = !empty($hasilDiagnosis) ? $hasilDiagnosis[0] : null;
 
-        // Simpan riwayat dengan user_id
-        if ($diagnosisTertinggi) {
+        // Simpan riwayat hanya jika user sudah login
+        if ($diagnosisTertinggi && auth()->check()) {
             Riwayat::create([
                 'user_id' => auth()->id(),
                 'nama_penyakit' => $diagnosisTertinggi['penyakit']->nama_penyakit,
@@ -96,8 +99,11 @@ class DiagnosisController extends Controller
             ]);
         }
 
+        // Tentukan nama pasien
+        $namaPasien = auth()->check() ? auth()->user()->name : 'Tamu';
+
         return view('diagnosis_hasil', [
-            'namaPasien' => auth()->user()->name,
+            'namaPasien' => $namaPasien,
             'diagnosisTertinggi' => $diagnosisTertinggi,
             'hasilDiagnosis' => $hasilDiagnosis,
         ]);

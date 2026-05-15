@@ -20,40 +20,28 @@
             </div>
         </div>
 
-        <div class="row g-3 mb-5">
-            <div class="col-md-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <i class="bi bi-clipboard2-pulse" style="font-size: 2.5rem; color: #6f42c1;"></i>
-                        <h5 class="card-title mt-3">Mulai Diagnosis</h5>
-                        <p class="card-text text-muted small">Jawab pertanyaan tentang gejala yang Anda alami</p>
-                        <a href="/diagnosis/kuis" class="btn btn-primary btn-sm">Mulai <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="card text-center">
-                    <div class="card-body">
-                        <i class="bi bi-clock-history" style="font-size: 2.5rem; color: #e83e8c;"></i>
-                        <h5 class="card-title mt-3">Lihat Riwayat</h5>
-                        <p class="card-text text-muted small">Lihat riwayat diagnosis Anda</p>
-                        <a href="/diagnosis/riwayat" class="btn btn-primary btn-sm">Riwayat <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
+        <div class="card text-center mb-5">
+            <div class="card-body">
+                <i class="bi bi-clipboard2-pulse" style="font-size: 2.5rem; color: #6f42c1;"></i>
+                <h5 class="card-title mt-3">Mulai Diagnosis</h5>
+                <p class="card-text text-muted small">Jawab pertanyaan tentang gejala yang Anda alami</p>
+                <a href="/diagnosis/kuis" class="btn btn-primary btn-sm">Mulai <i class="bi bi-arrow-right"></i></a>
             </div>
         </div>
 
         <div class="card">
-            <div class="card-header bg-light">
-                <h5 class="mb-0"><i class="bi bi-question-circle"></i> Bagaimana Cara Kerjanya?</h5>
-            </div>
-            <div class="card-body">
-                <ol>
-                    <li><strong>Isi Data Pribadi:</strong> Masukkan nama Anda untuk identifikasi.</li>
-                    <li><strong>Pilih Gejala:</strong> Centang gejala-gejala yang Anda alami.</li>
-                    <li><strong>Dapatkan Hasil:</strong> Sistem akan menganalisis dan memberikan diagnosis berdasarkan expert system rules.</li>
-                    <li><strong>Konsultasi:</strong> Konsultasikan hasil dengan profesional kesehatan mental yang berpengalaman.</li>
-                </ol>
+            <div class="card">
+                <div class="card-header bg-light">
+                    <h6 class="mb-0"><i class="bi bi-question-circle"></i> Bagaimana Cara Kerjanya?</h6>
+                </div>
+                <div class="card-body">
+                    <ol class="small mb-0">
+                        <li><strong>Isi Data Pribadi:</strong> Masukkan nama Anda untuk identifikasi.</li>
+                        <li><strong>Pilih Gejala:</strong> Centang gejala-gejala yang Anda alami.</li>
+                        <li><strong>Dapatkan Hasil:</strong> Sistem akan menganalisis dan memberikan diagnosis berdasarkan expert system rules.</li>
+                        <li><strong>Konsultasi:</strong> Konsultasikan hasil dengan profesional kesehatan mental yang berpengalaman.</li>
+                    </ol>
+                </div>
             </div>
         </div>
     </div>

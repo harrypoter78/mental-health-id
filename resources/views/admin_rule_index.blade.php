@@ -6,7 +6,7 @@
 <div class="page-header">
     <h3><i class="bi bi-diagram-3"></i> Kelola Rules</h3>
     <a href="{{ route('admin.rule.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Tambah
+        <i class="bi bi-plus-circle text-white"></i> Tambah Rule
     </a>
 </div>
 

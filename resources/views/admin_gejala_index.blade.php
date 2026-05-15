@@ -6,7 +6,7 @@
 <div class="page-header">
     <h3><i class="bi bi-heart-pulse"></i> Kelola Gejala</h3>
     <a href="{{ route('admin.gejala.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Tambah Gejala
+        <i class="bi bi-plus-circle text-white"></i> Tambah Gejala
     </a>
 </div>
 

@@ -109,11 +109,22 @@
                                 <a class="nav-link" href="/admin/dashboard">Admin</a>
                             </li>
                         @endif
-                        <li class="nav-item">
-                            <form action="/logout" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="nav-link btn btn-link" style="border: none; cursor: pointer;">Logout</button>
-                            </form>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> {{ auth()->user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person"></i> Profil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="/logout" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item" style="border: none; cursor: pointer;">
+                                            <i class="bi bi-box-arrow-right"></i> Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     @else
                         <li class="nav-item">

@@ -6,7 +6,7 @@
 <div class="page-header">
     <h3><i class="bi bi-virus2"></i> Kelola Penyakit</h3>
     <a href="{{ route('admin.penyakit.create') }}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> Tambah
+        <i class="bi bi-plus-circle text-white"></i> Tambah Penyakit
     </a>
 </div>
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 // Public Routes - Diagnosis
 Route::get('/', [DiagnosisController::class, 'index'])->name('diagnosis.index');
 Route::get('/diagnosis/kuis', [DiagnosisController::class, 'kuis'])->name('diagnosis.kuis');
-Route::post('/diagnosis/proses', [DiagnosisController::class, 'prosesDiagnosis'])->name('diagnosis.proses');
+Route::match(['get', 'post'], '/diagnosis/proses', [DiagnosisController::class, 'prosesDiagnosis'])->name('diagnosis.proses');
 Route::get('/diagnosis/riwayat', [DiagnosisController::class, 'riwayat'])->name('diagnosis.riwayat');
 
 // Admin Routes - Protected by auth and admin role
@@ -69,6 +69,24 @@ Route::middleware('guest')->group(function () {
             'email' => 'Email atau password tidak sesuai.',
         ]);
     });
+
+    Route::post('/register', function (Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = \App\Models\User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['password']),
+            'role' => 'user',
+        ]);
+
+        Auth::login($user);
+        return redirect()->intended('/');
+    });
 });
 
 Route::post('/logout', function () {
@@ -81,4 +99,42 @@ Route::post('/logout', function () {
         'Expires' => '0',
     ]);
 })->name('logout')->middleware('auth');
+
+// User Profile Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', function () {
+        return view('user_profile');
+    })->name('profile.edit');
+
+    Route::post('/profile/update', function (Illuminate\Http\Request $request) {
+        $user = auth()->user();
+        
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+        ]);
+
+        $user->update($validated);
+        return redirect()->route('profile.edit')->with('success', 'Profil berhasil diperbarui');
+    })->name('profile.update');
+
+    Route::post('/profile/change-password', function (Illuminate\Http\Request $request) {
+        $validated = $request->validate([
+            'current_password' => 'required|string',
+            'new_password' => 'required|string|min:6|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        if (!\Illuminate\Support\Facades\Hash::check($validated['current_password'], $user->password)) {
+            return back()->withErrors(['current_password' => 'Password saat ini tidak sesuai']);
+        }
+
+        $user->update([
+            'password' => \Illuminate\Support\Facades\Hash::make($validated['new_password']),
+        ]);
+
+        return back()->with('success', 'Password berhasil diubah');
+    })->name('profile.change-password');
+});
 

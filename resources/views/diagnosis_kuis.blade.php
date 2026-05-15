@@ -11,26 +11,20 @@
             </div>
             <div class="card-body">
                 @if (!auth()->check())
-                    <div class="alert alert-warning mb-4" role="alert">
-                        <i class="bi bi-exclamation-triangle"></i>
-                        <strong>Perhatian:</strong> Silakan <a href="{{ route('login') }}" class="alert-link">login</a> terlebih dahulu untuk menyimpan riwayat diagnosis Anda.
+                    <div class="alert alert-info mb-4">
+                        <i class="bi bi-info-circle"></i>
+                        <p class="mb-0">Anda dapat melakukan diagnosis tanpa login. Untuk menyimpan riwayat diagnosis, silakan <a href="{{ route('login') }}" class="alert-link">login terlebih dahulu</a>.</p>
+                    </div>
+                @else
+                    <div class="mb-4">
+                        <label for="nama_user" class="form-label fw-bold">Nama Anda:</label>
+                        <input type="text" class="form-control" id="nama_user" disabled value="{{ auth()->user()->name }}">
+                        <small class="text-muted">Data diambil dari akun Anda</small>
                     </div>
                 @endif
 
                 <form action="/diagnosis/proses" method="POST">
                     @csrf
-
-                    @if (!auth()->check())
-                        <div class="alert alert-info mb-4">
-                            <p class="mb-0">Anda dapat melakukan diagnosis tanpa login, namun riwayat tidak akan disimpan.</p>
-                        </div>
-                    @else
-                        <div class="mb-4">
-                            <label for="nama_user" class="form-label fw-bold">Nama Anda:</label>
-                            <input type="text" class="form-control" id="nama_user" disabled value="{{ auth()->user()->name }}">
-                            <small class="text-muted">Data diambil dari akun Anda</small>
-                        </div>
-                    @endif
 
                     <div class="mb-4">
                         <p class="fw-bold text-muted">
@@ -53,8 +47,11 @@
                     </div>
 
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <a href="/" class="btn btn-secondary">Batal</a>
-                        <button type="submit" class="btn btn-primary" @if (!auth()->check()) disabled @endif>
+                        {{-- <a href="/" class="btn btn-secondary">Batal</a> --}}
+                        <a href="/" class="btn btn-secondary d-flex align-items-center justify-content-center">
+                            Batal
+                        </a>
+                        <button type="submit" class="btn btn-primary">
                             <i class="bi bi-play-fill"></i> Mulai Diagnosis
                         </button>
                     </div>
