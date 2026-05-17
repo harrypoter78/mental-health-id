@@ -49,7 +49,6 @@
                 </table>
             </div> @if ($rule->hasPages())
                 <div class="d-flex justify-content-center mt-4">
-                    {{-- Tambahkan parameter bootstrap-5 agar ikonnya tidak meledak --}}
                     {{ $rule->links('pagination::bootstrap-5') }}
                 </div>
             @endif

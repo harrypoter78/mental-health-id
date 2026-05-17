@@ -11,8 +11,8 @@
             </div>
             <div class="card-body">
                 @if (!auth()->check())
-                    <div class="alert alert-info mb-4">
-                        <i class="bi bi-info-circle"></i>
+                    <div class="alert alert-info mb-4 d-flex align-items-center">
+                        <i class="bi bi-info-circle me-2"></i>
                         <p class="mb-0">Anda dapat melakukan diagnosis tanpa login. Untuk menyimpan riwayat diagnosis, silakan <a href="{{ route('login') }}" class="alert-link">login terlebih dahulu</a>.</p>
                     </div>
                 @else

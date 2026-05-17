@@ -33,42 +33,34 @@
         }
 
         .navbar {
-            background: rgba(255, 255, 255, 0.98) !important;
+            background: rgba(255, 255, 255, 0.95) !important;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             border-bottom: 3px solid var(--primary);
-            z-index: 100;
-            padding: 12px 0;
-            position: fixed !important;
-            top: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
         }
 
         .navbar-brand {
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: var(--primary) !important;
         }
 
         .admin-wrapper {
             display: flex;
             flex: 1;
-            margin-top: 56px;
         }
 
         .sidebar {
             width: 260px;
             background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
             color: white;
-            position: fixed;
-            left: 0;
-            top: 56px;
-            height: calc(100vh - 56px);
+            position: sticky;
+            top: 0;
+            height: 100vh;
             overflow-y: auto;
             box-shadow: 2px 0 8px rgba(0, 0, 0, 0.15);
             transition: all 0.3s ease;
             z-index: 99;
+            align-self: flex-start; /* Mencegah sidebar meregang */
         }
 
         .sidebar-header {
@@ -131,14 +123,20 @@
 
         .main-content {
             flex: 1;
-            margin-left: 260px;
             padding: 30px;
             transition: all 0.3s ease;
             background: #f5f7fa;
+            /* Removed flex properties to allow natural document flow */
         }
 
         .container-main {
             width: 100%;
+            /* Removed flex-grow as it's no longer in a flex container for vertical alignment */
+        }
+
+        /* Override Bootstrap container within main content to be full-width */
+        .main-content .container {
+            max-width: 100%;
         }
 
         .card {
@@ -236,12 +234,10 @@
 
         .footer {
             text-align: center;
-            color: #666;
+            color: #6c757d;
             padding: 20px;
-            background: white;
-            margin-top: auto;
-            border-top: 2px solid #e0e0e0;
             font-size: 0.9rem;
+            margin-top: 50px; /* Restore fixed margin-top for consistent spacing */
         }
 
         /* Responsive Design */
@@ -322,22 +318,37 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/">Diagnosis</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/diagnosis/riwayat">Riwayat</a>
-                    </li>
                     @auth
                         <li class="nav-item">
-                            <a class="nav-link" href="/admin/dashboard">Admin</a>
+                            <a class="nav-link" href="/diagnosis/riwayat">Riwayat</a>
                         </li>
-                        <li class="nav-item">
-                            <form action="/logout" method="POST" class="d-inline">
-                                @csrf
-                                <button type="submit" class="nav-link btn btn-link" style="border: none; cursor: pointer;">Logout</button>
-                            </form>
+                    @endauth
+                    @auth
+                        @if (auth()->user()->role === 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="/admin/dashboard">Admin</a>
+                            </li>
+                        @endif
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
+                                <i class="bi bi-person-circle"></i> {{ auth()->user()->name }}
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="bi bi-person"></i> Profil</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li>
+                                    <form action="/logout" method="POST" class="d-inline">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item" style="border: none; cursor: pointer;">
+                                            <i class="bi bi-box-arrow-right"></i> Logout
+                                        </button>
+                                    </form>
+                                </li>
+                            </ul>
                         </li>
                     @else
                         <li class="nav-item">
-                            <a class="nav-link" href="/login">Login Admin</a>
+                            <a class="nav-link" href="/login">Login</a>
                         </li>
                     @endauth
                 </ul>
@@ -377,9 +388,15 @@
                     </a>
                 </li>
                 <li>
+                    <a href="{{ route('admin.users.index') }}" class="@if(request()->routeIs('admin.users.*')) active @endif">
+                        <i class="bi bi-people"></i>
+                        <span>Kelola Pengguna</span>
+                    </a>
+                </li>
+                <li>
                     <a href="{{ route('admin.riwayat.index') }}" class="@if(request()->routeIs('admin.riwayat.*')) active @endif">
                         <i class="bi bi-clipboard-check"></i>
-                        <span>Lihat Riwayat</span>
+                        <span>Kelola Riwayat</span>
                     </a>
                 </li>
             </ul>
@@ -409,11 +426,10 @@
 
                 @yield('content')
             </div>
+            <div class="footer">
+                <p>&copy; 2026 Sistem Diagnosis Kesehatan Mental | Berbasis Expert System</p>
+            </div>
         </main>
-    </div>
-
-    <div class="footer">
-        <p>&copy; 2026 Sistem Diagnosis Kesehatan Mental | Berbasis Expert System</p>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

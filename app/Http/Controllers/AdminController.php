@@ -6,7 +6,9 @@ use App\Models\Gejala;
 use App\Models\Penyakit;
 use App\Models\Rule;
 use App\Models\Riwayat;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -24,8 +26,9 @@ class AdminController extends Controller
         $totalPenyakit = Penyakit::count();
         $totalRule = Rule::count();
         $totalRiwayat = Riwayat::count();
+        $totalUser = User::count();
 
-        return view('admin_dashboard', compact('totalGejala', 'totalPenyakit', 'totalRule', 'totalRiwayat'));
+        return view('admin_dashboard', compact('totalGejala', 'totalPenyakit', 'totalRule', 'totalRiwayat', 'totalUser'));
     }
 
     // ======================== GEJALA ========================
@@ -196,5 +199,79 @@ class AdminController extends Controller
     {
         Riwayat::destroy($id);
         return redirect()->route('admin.riwayat.index')->with('success', 'Riwayat berhasil dihapus');
+    }
+
+    // ======================== USER ========================
+
+    public function indexUser()
+    {
+        $users = User::paginate(10);
+        return view('admin_users_index', compact('users'));
+    }
+
+    public function createUser()
+    {
+        return view('admin_users_create');
+    }
+
+    public function storeUser(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email',
+            'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|string|in:user,admin',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+        ]);
+
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil ditambahkan');
+    }
+
+    public function editUser($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin_users_edit', compact('user'));
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $id . ',id',
+            'password' => 'nullable|string|min:6|confirmed',
+            'role' => 'required|string|in:user,admin',
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role,
+        ];
+
+        if ($request->filled('password')) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil diperbarui');
+    }
+
+    public function destroyUser($id)
+    {
+        // Prevent deleting the currently logged in admin
+        if (auth()->id() == $id) {
+            return redirect()->route('admin.users.index')->with('error', 'Anda tidak dapat menghapus akun sendiri!');
+        }
+        
+        User::destroy($id);
+        return redirect()->route('admin.users.index')->with('success', 'User berhasil dihapus');
     }
 }

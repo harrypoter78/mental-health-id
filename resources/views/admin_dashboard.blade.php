@@ -41,6 +41,34 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
+                        <h6 class="card-title mb-0">Total Pengguna</h6>
+                        <h3 class="mt-2 mb-0">{{ $totalUser }}</h3>
+                    </div>
+                    <i class="bi bi-people" style="font-size: 2rem; opacity: 0.5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h6 class="card-title mb-0">Total Pengguna</h6>
+                        <h3 class="mt-2 mb-0">{{ $totalUser }}</h3>
+                    </div>
+                    <i class="bi bi-people" style="font-size: 2rem; opacity: 0.5;"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 col-lg-3">
+        <div class="card text-white" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
                         <h6 class="card-title mb-0">Total Rules</h6>
                         <h3 class="mt-2 mb-0">{{ $totalRule }}</h3>
                     </div>
@@ -67,7 +95,7 @@
 
 <div class="row g-4">
     <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-header bg-light">
                 <h5 class="mb-0"><i class="bi bi-list"></i> Menu Master Data</h5>
             </div>
@@ -81,15 +109,18 @@
                 <a href="{{ route('admin.rule.index') }}" class="btn btn-outline-primary btn-block mb-2 w-100 text-start">
                     <i class="bi bi-diagram-3"></i> Kelola Rules
                 </a>
+                <a href="{{ route('admin.users.index') }}" class="btn btn-outline-primary btn-block mb-2 w-100 text-start">
+                    <i class="bi bi-people"></i> Kelola Pengguna
+                </a>
                 <a href="{{ route('admin.riwayat.index') }}" class="btn btn-outline-primary btn-block w-100 text-start">
-                    <i class="bi bi-clipboard-check"></i> Lihat Riwayat
+                    <i class="bi bi-clipboard-check"></i> Kelola Riwayat
                 </a>
             </div>
         </div>
     </div>
 
     <div class="col-md-6">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-header bg-light">
                 <h5 class="mb-0"><i class="bi bi-info-circle"></i> Informasi Sistem</h5>
             </div>

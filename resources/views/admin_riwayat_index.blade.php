@@ -45,7 +45,6 @@
                 </table>
             </div> @if ($riwayat->hasPages())
                 <div class="d-flex justify-content-center mt-4">
-                    {{-- Tambahkan parameter bootstrap-5 agar ikonnya kembali normal --}}
                     {{ $riwayat->links('pagination::bootstrap-5') }}
                 </div>
             @endif

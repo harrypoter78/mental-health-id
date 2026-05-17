@@ -42,6 +42,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     // Riwayat Routes
     Route::get('/riwayat', [AdminController::class, 'indexRiwayat'])->name('admin.riwayat.index');
     Route::delete('/riwayat/{id}', [AdminController::class, 'destroyRiwayat'])->name('admin.riwayat.destroy');
+
+    // Users Routes
+    Route::get('/users', [AdminController::class, 'indexUser'])->name('admin.users.index');
+    Route::get('/users/create', [AdminController::class, 'createUser'])->name('admin.users.create');
+    Route::post('/users', [AdminController::class, 'storeUser'])->name('admin.users.store');
+    Route::get('/users/{id}/edit', [AdminController::class, 'editUser'])->name('admin.users.edit');
+    Route::put('/users/{id}', [AdminController::class, 'updateUser'])->name('admin.users.update');
+    Route::delete('/users/{id}', [AdminController::class, 'destroyUser'])->name('admin.users.destroy');
 });
 
 // Authentication Routes
@@ -137,4 +145,3 @@ Route::middleware('auth')->group(function () {
         return back()->with('success', 'Password berhasil diubah');
     })->name('profile.change-password');
 });
-
